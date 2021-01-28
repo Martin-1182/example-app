@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ContactFormController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +26,5 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/contact', function () {
     return view('contact');
 })->name('contact');
 
-Route::middleware(['auth:sanctum', 'verified'])->post('/contact')->name('send-mail');
+
+ require_once __DIR__ .'/jetstream.php';

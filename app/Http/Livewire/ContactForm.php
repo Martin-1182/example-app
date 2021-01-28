@@ -15,10 +15,10 @@ class ContactForm extends Component
     public $successMessage;
 
     protected $rules = [
-            'name' => 'required|min:5',
-            'email' => 'required|email',
-            'phone' => 'required',
-            'message' => 'required|min:6',
+        'name' => 'required|min:5',
+        'email' => 'required|email',
+        'phone' => 'required|digits:10',
+        'message' => 'required|min:6',
     ];
 
     public function updated($propertyName)
@@ -27,8 +27,9 @@ class ContactForm extends Component
     }
 
 
-    public function sendForm()
+    public function submitForm()
     {
+
         $data = $this->validate();
 
         $data['name'] = $this->name;
@@ -36,9 +37,21 @@ class ContactForm extends Component
         $data['phone'] = $this->phone;
         $data['message'] = $this->message;
 
+        sleep(1);
+        
         Mail::to(auth()->user()->email)->send(new ContactMail($data));
-
         $this->successMessage = 'Message has been successfully send';
+        $this->resetForm();
+
+
+    }
+
+    private function resetForm()
+    {
+        $this->name = '';
+        $this->email = '';
+        $this->phone = '';
+        $this->message = '';
     }
 
 
